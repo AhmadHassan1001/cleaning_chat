@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "cleaning-chat"
+version = "0.1.0"
+description = ""
+authors = ["Ahmad Hassan <mi010203269@gmail.com>"]
+readme = "README.md"
+packages = [{include = "cleaning_chat"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "^5.0.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
