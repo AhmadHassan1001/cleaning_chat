@@ -120,7 +120,7 @@ Request
 Response
 ```json
 {
-    "answer": "Thanks for your message! The next available cleaning service is on 2024-05-19 at 10:07."
+    "answer": "Thanks for your message! Our general cleaning service is priced at $100 for 3 hours. Our next availability for cleaning services is on August 14, 2025, at 08:14."
 }
 ```
 
