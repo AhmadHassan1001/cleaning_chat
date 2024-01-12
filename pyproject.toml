@@ -10,6 +10,12 @@ packages = [{include = "cleaning_chat"}]
 python = "^3.10"
 django = "^5.0.1"
 djangorestframework = "^3.14.0"
+langchain = "^0.1.0"
+langchain-openai = "^0.0.2"
+chromadb = "^0.4.22"
+bs4 = "^0.0.1"
+langchainhub = "^0.1.14"
+pypdf = "^3.17.4"
 
 
 [build-system]
