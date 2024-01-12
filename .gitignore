@@ -2,4 +2,4 @@ cleaning_chat/db.sqlite3
 cleaning_chat/cleaning_agent/__pycache__/*
 cleaning_chat/cleaning_chat/__pycache__/*
 cleaning_chat/cleaning_agent/migrations/__pycache__/*
-.env
+# .env

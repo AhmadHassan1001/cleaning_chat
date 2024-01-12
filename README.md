@@ -17,6 +17,7 @@ This is a prototype for chatbot used to book cleaning services for a virtual com
 # .env
 OPENAI_API_KEY=<your openai api key>
 ```
+* Note: I will let my openai api key for testing purpose. However, it is recommended to use your own api key.
 4. run `poetry run python cleaning_chat\manage.py migrate` to migrate database
 5. run `poetry run python cleaning_chat\manage.py runserver` to start the server
 
