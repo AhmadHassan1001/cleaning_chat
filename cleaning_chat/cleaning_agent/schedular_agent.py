@@ -20,7 +20,13 @@ class SchedulerAgent:
 
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         splits = text_splitter.split_documents(docs)
-        vectorstore = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
+        vectorstore=None
+        try:
+            vectorstore=Chroma(persist_directory="./chroma_db", embedding_function=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
+            print("loaded chroma")
+        except Exception as e:
+            print("chroma save",e)
+            vectorstore = Chroma.from_documents(persist_directory="./chroma_db",documents=splits, embedding=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
 
         # Retrieve and generate using the relevant snippets of the blog.
         retriever = vectorstore.as_retriever()
