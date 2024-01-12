@@ -6,6 +6,7 @@ import json
 
 from .schedular_agent import SchedulerAgent
 from .utils import get_api_date
+from django.conf import settings
 class GuardrailAgent:
     
     def prompt_form_system(self):
@@ -58,7 +59,7 @@ class GuardrailAgent:
             }
         ]
 
-        self.llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+        self.llm = ChatOpenAI(openai_api_key=settings.OPENAI_API_KEY,model_name="gpt-3.5-turbo", temperature=0)
 
         
     def get_answer(self,question):
@@ -86,11 +87,12 @@ class GuardrailAgent:
 
                         agent=SchedulerAgent(date)
                         return agent.answer(question)
-        except:
+        except Exception as e:
+            # raise e
             pass
         
         return result.content
 
 if __name__ == "__main__":
     agent=GuardrailAgent()
-    print(agent.get_answer("I want to book general cleaning"))
+    print("Answerrr:",agent.get_answer("I want to book general cleaning"))

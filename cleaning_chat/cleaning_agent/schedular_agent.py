@@ -9,21 +9,23 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain.document_loaders import PyPDFLoader
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
+from django.conf import settings
 
 class SchedulerAgent:
     def __init__(self,next_availability) -> None:
-        
-        loader = PyPDFLoader("docs/Cleaning pricing.pdf")
+        print("directoryyyy:", settings.BASE_DIR)
+        directory = str(settings.BASE_DIR)+"\\cleaning_agent\\docs\\Cleaning pricing.pdf"
+        loader = PyPDFLoader(directory)
         docs = loader.load()
 
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         splits = text_splitter.split_documents(docs)
-        vectorstore = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings())
+        vectorstore = Chroma.from_documents(documents=splits, embedding=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
 
         # Retrieve and generate using the relevant snippets of the blog.
         retriever = vectorstore.as_retriever()
         # prompt="You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.\nQuestion: {question} \nContext: {context} \nAnswer:"
-        llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0)
+        llm = ChatOpenAI(openai_api_key=settings.OPENAI_API_KEY,model_name="gpt-3.5-turbo", temperature=0)
 
 
 
@@ -44,7 +46,7 @@ class SchedulerAgent:
 
     def answer(self,query):
 
-        return self.qa_chain({"query": query})
+        return self.qa_chain({"query": query})["result"]
 
 if __name__ == "__main__":
     print(SchedulerAgent("2022-01-05 06:00").answer("I want to book general cleaning"))
