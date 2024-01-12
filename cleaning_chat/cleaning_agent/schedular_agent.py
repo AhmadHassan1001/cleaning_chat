@@ -21,16 +21,14 @@ class SchedulerAgent:
         text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
         splits = text_splitter.split_documents(docs)
         vectorstore=None
-        try:
-            vectorstore=Chroma(persist_directory="./chroma_db", embedding_function=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
-            print("loaded chroma")
-        except Exception as e:
-            print("chroma save",e)
-            vectorstore = Chroma.from_documents(persist_directory="./chroma_db",documents=splits, embedding=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
+        # try:
+        #     vectorstore=Chroma(persist_directory="./chroma_db", embedding_function=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
+        #     print("loaded chroma")
+        # except Exception as e:
+        # print("chroma save",e)
+        vectorstore = Chroma.from_documents(persist_directory="./chroma_db",documents=splits, embedding=OpenAIEmbeddings(openai_api_key=settings.OPENAI_API_KEY))
 
-        # Retrieve and generate using the relevant snippets of the blog.
         retriever = vectorstore.as_retriever()
-        # prompt="You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise.\nQuestion: {question} \nContext: {context} \nAnswer:"
         llm = ChatOpenAI(openai_api_key=settings.OPENAI_API_KEY,model_name="gpt-3.5-turbo", temperature=0)
 
 
