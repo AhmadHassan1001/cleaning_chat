@@ -46,4 +46,5 @@ class SchedulerAgent:
 
         return self.qa_chain({"query": query})
 
-print(SchedulerAgent("2022-01-05 06:00").answer("I want to book general cleaning"))
+if __name__ == "__main__":
+    print(SchedulerAgent("2022-01-05 06:00").answer("I want to book general cleaning"))
